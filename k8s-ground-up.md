@@ -65,3 +65,27 @@ Kubernetes is a not a single package application that you can install with one c
 Let us take a look at Kubernetes architecture diagram below:
 
 ![19-docs](https://user-images.githubusercontent.com/47898882/147802157-9e913a47-8e3d-4527-8bec-672204bbb1af.JPG)
+
+Read about every component in the official documentation.
+
+Make sure you understand the role of each component on the diagram above, without this understanding it will be extremely difficult for you to install and operate a K8s cluster, especially when it comes to troubleshooting and maintenance.
+
+As an IT professional in general, you shall be comfortable using official documentation for tools you use, in case of Kubernetes – it has a very well structured and comprehensive documentation portal with multiple configuration code snippets. We strongly encourage you to add it to your bookmarks and refer to it every time you have a K8s-related question.
+
+## K8s installation options
+So far, Kubernetes sounds like a lot of fun, right? With its intuitive architecture, and rich configuration options, you may already want to jump right in, spin up a few VMs and begin to install and configure a Kubernetes cluster. But hold on for a second. Installing and configuring Kubernetes is far from being a walk in the park, i.e., it is very difficult to implement and get it ready for production. Especially, if you want to setup a highly available, and secure Kubernetes cluster.
+
+The good news is, there are open-source tools available today that already has all the hard work done and you can plug into them easily. An example of that is minikube, which can be used during testing and development.
+
+For a better understanding of each aspect of spinning up a Kubernetes cluster, we will do it without any automated helpers. You will install each and every component manually from scratch and learn how to make them work together – we call this approach "K8s From-Ground-Up".
+
+To successfully implement "K8s From-Ground-Up", the following and even more will be done by you as a K8s administrator:
+
+- Install and configure master (also known as control plane) components and worker nodes (or just nodes.
+- Apply security settings across the entire cluster (i.e., encrypting the data in transit, and at rest)
+- In transit encryption means encrypting communications over the network using HTTPS
+- At rest encryption means encrypting the data stored on a disk
+- Plan the capacity for the backend data store etcd
+- Configure network plugins for the containers to communicate
+- Manage periodical upgrade of the cluster
+- Configure observability and auditing
