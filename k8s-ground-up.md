@@ -63,3 +63,5 @@ To know when to choose between Docker Swarm and Kubernetes, Here is an interesti
 Kubernetes is a not a single package application that you can install with one command, it is comprised of several components, some of them can be deployed as services, some can be also deployed as separate containers.
 
 Let us take a look at Kubernetes architecture diagram below:
+
+![19-docs](https://user-images.githubusercontent.com/47898882/147802157-9e913a47-8e3d-4527-8bec-672204bbb1af.JPG)
