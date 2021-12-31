@@ -220,3 +220,9 @@ aws ec2 modify-vpc-attribute \
 --vpc-id ${VPC_ID} \
 --enable-dns-hostnames '{"Value": true}'
 ```
+
+- Set the required region
+
+```
+AWS_REGION=eu-central-1
+```
