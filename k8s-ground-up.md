@@ -472,7 +472,18 @@ for i in 0 1 2; do
 done
 ```
 
+## STEP 3 PREPARE THE SELF-SIGNED CERTIFICATE AUTHORITY AND GENERATE TLS CERTIFICATES
 
+The following components running on the Master node will require TLS certificates.
 
+- kube-controller-manager
+- kube-scheduler
+- etcd
+- kube-apiserver
+
+The following components running on the Worker nodes will require TLS certificates.
+
+- kubelet
+- kube-proxy
 
 
