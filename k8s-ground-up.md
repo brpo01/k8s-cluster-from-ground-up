@@ -784,3 +784,37 @@ EOF
     ${NAME}-worker-${i}-csr.json | cfssljson -bare ${NAME}-worker-${i}
 done
 ```
+
+- Finally, kubernetes admin user's Client Certificate and Private Key
+
+```
+}
+cat > admin-csr.json <<EOF
+{
+  "CN": "admin",
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  },
+  "names": [
+    {
+      "C": "UK",
+      "L": "England",
+      "O": "system:masters",
+      "OU": "DAREY.IO DEVOPS",
+      "ST": "London"
+    }
+  ]
+}
+EOF
+
+cfssl gencert \
+  -ca=ca.pem \
+  -ca-key=ca-key.pem \
+  -config=ca-config.json \
+  -profile=kubernetes \
+  admin-csr.json | cfssljson -bare admin
+}
+```
+
+- 
