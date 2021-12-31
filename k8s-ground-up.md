@@ -180,3 +180,17 @@ sudo mv cfssl cfssljson /usr/local/bin/
 
 ## AWS CLOUD RESOURCES FOR KUBERNETES CLUSTER
 As we already know, we need some machines to run the control plane and the worker nodes. In this section, you will provision EC2 Instances required to run your K8s cluster. You can use Terraform for this. But it is highly recommended to start out first with manual provisioning using awscli and have thorough knowledge about the whole setup. After that, you can destroy the entire project and start all over again using Terraform. This manual approach will solidify your skills and give you the opportunity to face more challenges.
+
+Step 1 – Configure Network Infrastructure
+Virtual Private Cloud – VPC
+
+- Create a directory named k8s-cluster-from-ground-up
+
+- Create a VPC and store the ID as a variable:
+
+```
+VPC_ID=$(aws ec2 create-vpc \
+--cidr-block 172.31.0.0/16 \
+--output text --query 'Vpc.VpcId'
+)
+```
