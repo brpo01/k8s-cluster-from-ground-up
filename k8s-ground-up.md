@@ -56,4 +56,4 @@ Kubernetes is a tool designed to do Container Orchestration and it does its job 
 
 As mentioned earlier, there are other alternatives to Docker Compose. But, throughout the entire PBL program, we will not focus on Docker Swarm. We will rather spend more time with Kubernetes. Part of the reason for this is because Kubernetes has more functionalities and is widely in use in the industry.
 
-To know when to choose between Docker Swarm and Kubernetes, Here is an interesting article to read with some very enlightening stats.
+To know when to choose between Docker Swarm and Kubernetes, Here is an interesting [article](https://dzone.com/articles/quotdocker-swarm-or-kubernetesquot-is-it-the-right) to read with some very enlightening stats.
