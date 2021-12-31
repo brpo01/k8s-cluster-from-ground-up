@@ -242,3 +242,31 @@ DHCP_OPTION_SET_ID=$(aws ec2 create-dhcp-options \
     "Key=domain-name-servers,Values=AmazonProvidedDNS" \
   --output text --query 'DhcpOptions.DhcpOptionsId')
 ```
+
+- Tag the DHCP Option set:
+
+```
+aws ec2 create-tags \
+  --resources ${DHCP_OPTION_SET_ID} \
+  --tags Key=Name,Value=${NAME}
+```
+
+- Associate the DHCP Option set with the VPC:
+
+```
+aws ec2 associate-dhcp-options \
+  --dhcp-options-id ${DHCP_OPTION_SET_ID} \
+  --vpc-id ${VPC_ID}
+```
+
+- Create the Subnet:
+
+```
+SUBNET_ID=$(aws ec2 create-subnet \
+  --vpc-id ${VPC_ID} \
+  --cidr-block 172.31.0.0/24 \
+  --output text --query 'Subnet.SubnetId')
+aws ec2 create-tags \
+  --resources ${SUBNET_ID} \
+  --tags Key=Name,Value=${NAME}
+```
