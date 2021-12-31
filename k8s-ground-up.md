@@ -112,3 +112,12 @@ You will create 3 EC2 Instances, and in the end, we will have the following part
 - Configured SSL/TLS certificates for Kubernetes components to communicate securely
 - Configured Node Network
 - Configured Pod Network
+
+## STEP 0-INSTALL CLIENT TOOLS BEFORE BOOTSTRAPPING THE CLUSTER.
+
+First, you will need some client tools installed and configurations made on your client workstation:
+
+- awscli – is a unified tool to manage your AWS services
+- kubectl – this command line utility will be your main control tool to manage your K8s cluster. You will use this tool so many times, so you will be able to type ‘kubetcl’ on your keyboard with a speed of light. You can always make a shortcut (alias) to just one character ‘k’. Also, add this extremely useful official kubectl Cheat Sheet to your bookmarks, it has examples of the most used ‘kubectl’ commands.
+- cfssl – an open source toolkit for everything TLS/SSL from Cloudflare
+- cfssljson – a program, which takes the JSON output from the cfssl and writes certificates, keys, CSRs, and bundles to disk.
