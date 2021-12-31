@@ -194,3 +194,29 @@ VPC_ID=$(aws ec2 create-vpc \
 --output text --query 'Vpc.VpcId'
 )
 ```
+
+- Tag the VPC so that it is named:
+
+```
+NAME=k8s-cluster-from-ground-up
+
+aws ec2 create-tags \
+  --resources ${VPC_ID} \
+  --tags Key=Name,Value=${NAME}
+```
+
+- Enable DNS support for your VPC:
+
+```
+aws ec2 modify-vpc-attribute \
+--vpc-id ${VPC_ID} \
+--enable-dns-support '{"Value": true}'
+```
+
+- Enable DNS support for hostnames:
+
+```
+aws ec2 modify-vpc-attribute \
+--vpc-id ${VPC_ID} \
+--enable-dns-hostnames '{"Value": true}'
+```
