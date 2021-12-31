@@ -15,3 +15,8 @@ For now we will not list down all the features and benefits of Kubernetes, you c
 This project is the first of a series Kubernetes-related practice projects, so get ready to become a professional containers’ fleet "pilot"*.
 
 *Kubernetes (κυβερνήτης, Greek for "helmsman" or "pilot" or "governor", and the etymological root of cybernetics)
+
+## Why migrate from Docker Compose to K8s
+In the previous project you successfully deployed your Docker containers using Docker Compose, it is a great tool that helps avoiding execution of multiple CLI commands by preparing a declarative configuration file. It is handy when you deploy one or a few containers, but in most cases, it does not fit for production deployments.
+
+Because of the many limitations that Docker Compose has, it is very important for us to consider migrating our solution to more an advanced technology. The most common alternatives to Compose, amongst a few others, are Docker Swarm and Kubernetes.
