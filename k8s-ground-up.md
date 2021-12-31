@@ -380,4 +380,25 @@ aws elbv2 register-targets \
   --targets Id=172.31.0.1{0,1,2}
 ```
 
+- Create a listener to listen for requests and forward to the target nodes on TCP port 6443
+
+```
+aws elbv2 create-listener \
+--load-balancer-arn ${LOAD_BALANCER_ARN} \
+--protocol TCP \
+--port 6443 \
+--default-actions Type=forward,TargetGroupArn=${TARGET_GROUP_ARN} \
+--output text --query 'Listeners[].ListenerArn'
+```
+
+- Get the Kubernetes Public address
+
+```
+KUBERNETES_PUBLIC_ADDRESS=$(aws elbv2 describe-load-balancers \
+--load-balancer-arns ${LOAD_BALANCER_ARN} \
+--output text --query 'LoadBalancers[].DNSName')
+```
+
+
+
 
