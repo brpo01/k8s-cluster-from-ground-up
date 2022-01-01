@@ -1395,3 +1395,11 @@ sudo systemctl status kube-controller-manager
 sudo systemctl status kube-scheduler
 }
 ```
+
+**NOTE**: There is a trap in the entire setup you have been going through, and so the api-server will not start up on your server if you have followed the exact steps so far. As a DevOps engineer, you must be able to solve problems.
+
+**HINTS**:
+
+- The problem relates to etcd configuration.
+- Check the systemd logs for the api-server. The problem will be clearly logged, and it will give you an idea what is wrong. Find out how to fix it.
+
