@@ -1246,3 +1246,9 @@ service-account-key.pem service-account.pem \
 encryption-config.yaml /var/lib/kubernetes/
 }
 ```
+
+The instance internal IP address will be used to advertise the API Server to members of the cluster. Retrieve the internal IP address for the current compute instance:
+
+export INTERNAL_IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
+
+Create the kube-apiserver.service systemd unit file: Ensure to read each startup flag used in below systemd file from the [documentation](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/) here
