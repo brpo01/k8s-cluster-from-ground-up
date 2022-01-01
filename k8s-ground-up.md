@@ -1089,7 +1089,7 @@ EOF
 
 - Send the encryption file to the Controller nodes using scp and a for loop.
 
-Bootstrap etcd cluster
+## Bootstrap etcd cluster
 
 TIPS: Use a terminal multi-plexer like multi-tabbed putty or tmux to work with multiple terminal sessions simultaneously. It will make your life easier, especially when you need to work on multiple nodes and run the same command across all nodes. Imagine repeating the same commands on 10 different nodes, and you don not intend to start automating with a configuration management tool like Ansible yet.
 
@@ -1212,3 +1212,37 @@ sudo ETCDCTL_API=3 etcdctl member list \
 
 ## BOOTSTRAP THE CONTROL PLANE
 In this section, you will configure the components for the control plane on the master/controller nodes.
+
+- Create the Kubernetes configuration directory:
+
+```
+sudo mkdir -p /etc/kubernetes/config
+```
+
+- Download the official Kubernetes release binaries:
+```
+wget -q --show-progress --https-only --timestamping \
+"https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kube-apiserver" \
+"https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kube-controller-manager" \
+"https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kube-scheduler" \
+"https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kubectl"
+```
+
+- Install the Kubernetes binaries:
+```
+{
+chmod +x kube-apiserver kube-controller-manager kube-scheduler kubectl
+sudo mv kube-apiserver kube-controller-manager kube-scheduler kubectl /usr/local/bin/
+}
+```
+
+- Configure the Kubernetes API Server:
+```
+{
+sudo mkdir -p /var/lib/kubernetes/
+
+sudo mv ca.pem ca-key.pem master-kubernetes-key.pem master-kubernetes.pem \
+service-account-key.pem service-account.pem \
+encryption-config.yaml /var/lib/kubernetes/
+}
+```
