@@ -1027,3 +1027,28 @@ Notice that the --server is set to use 127.0.0.1. This is because, this componen
   kubectl config use-context default --kubeconfig=kube-scheduler.kubeconfig
 }
 ```
+
+- Finally, generate the kubeconfig file for the admin user
+
+```
+{
+  kubectl config set-cluster ${NAME} \
+    --certificate-authority=ca.pem \
+    --embed-certs=true \
+    --server=https://${KUBERNETES_API_SERVER_ADDRESS}:6443 \
+    --kubeconfig=admin.kubeconfig
+
+  kubectl config set-credentials admin \
+    --client-certificate=admin.pem \
+    --client-key=admin-key.pem \
+    --embed-certs=true \
+    --kubeconfig=admin.kubeconfig
+
+  kubectl config set-context default \
+    --cluster=${NAME} \
+    --user=admin \
+    --kubeconfig=admin.kubeconfig
+
+  kubectl config use-context default --kubeconfig=admin.kubeconfig
+}
+```
