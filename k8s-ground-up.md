@@ -1055,3 +1055,16 @@ Notice that the --server is set to use 127.0.0.1. This is because, this componen
 
 **TASK: Distribute the files to their respective servers, using scp and a for loop like we have done previously. This is a test to validate that you understand which component must go to which node**.
 
+## STEP 6 PREPARE THE ETCD DATABASE FOR ENCRYPTION AT REST.
+
+Prepare the etcd database for encryption at rest.
+Kubernetes uses etcd (A distributed key value store) to store variety of data which includes the cluster state, application configurations, and secrets. By default, the data that is being persisted to the disk is not encrypted. Any attacker that is able to gain access to this database can exploit the cluster since the data is stored in plain text. Hence, it is a security risk for Kubernetes that needs to be addressed.
+
+To mitigate this risk, we must prepare to encrypt etcd at rest. "At rest" means data that is stored and persists on a disk. Anytime you hear "in-flight" or "in transit" refers to data that is being transferred over the network. "In-flight" encryption is done through TLS.
+
+- Generate the encryption key and encode it using base64
+
+ETCD_ENCRYPTION_KEY=$(head -c 64 /dev/urandom | base64) 
+See the output that will be generated when called. Yours will be a different random string.
+
+*echo $ETCD_ENCRYPTION_KEY*
