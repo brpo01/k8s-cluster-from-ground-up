@@ -1882,3 +1882,41 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 ```
+
+- Create the kube-proxy.yaml file
+```
+cat <<EOF | sudo tee /var/lib/kube-proxy/kube-proxy-config.yaml
+kind: KubeProxyConfiguration
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+clientConnection:
+  kubeconfig: "/var/lib/kube-proxy/kubeconfig"
+mode: "iptables"
+clusterCIDR: "172.31.0.0/16"
+EOF
+```
+- Configure the Kube Proxy systemd service
+```
+cat <<EOF | sudo tee /etc/systemd/system/kube-proxy.service
+[Unit]
+Description=Kubernetes Kube Proxy
+Documentation=https://github.com/kubernetes/kubernetes
+[Service]
+ExecStart=/usr/local/bin/kube-proxy \\
+  --config=/var/lib/kube-proxy/kube-proxy-config.yaml
+Restart=on-failure
+RestartSec=5
+[Install]
+WantedBy=multi-user.target
+EOF
+```
+- Reload configurations and start both services
+```
+{
+  sudo systemctl daemon-reload
+  sudo systemctl enable containerd kubelet kube-proxy
+  sudo systemctl start containerd kubelet kube-proxy
+}
+```
+
+Now you should have the worker nodes joined to the cluster, and in a READY state.
+```kubectl get nodes --kubeconfig admin.kubeconfig -o wide```
