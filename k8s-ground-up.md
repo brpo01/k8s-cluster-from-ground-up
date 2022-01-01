@@ -1210,3 +1210,5 @@ sudo ETCDCTL_API=3 etcdctl member list \
   --key=/etc/etcd/master-kubernetes-key.pem
 ```
 
+## BOOTSTRAP THE CONTROL PLANE
+In this section, you will configure the components for the control plane on the master/controller nodes.
