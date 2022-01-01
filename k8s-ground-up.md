@@ -1403,3 +1403,24 @@ sudo systemctl status kube-scheduler
 - The problem relates to etcd configuration.
 - Check the systemd logs for the api-server. The problem will be clearly logged, and it will give you an idea what is wrong. Find out how to fix it.
 
+## TEST THAT EVERYTHING IS WORKING FINE
+
+- To get the cluster details run:
+```kubectl cluster-info  --kubeconfig admin.kubeconfig```
+OUTPUT: Kubernetes control plane is running at https://k8s-api-server.svc.darey.io:6443
+
+- To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+
+- To get the current namespaces:
+```kubectl get namespaces --kubeconfig admin.kubeconfig```
+
+OUTPUT:
+
+NAME              STATUS   AGE
+default           Active   22m
+kube-node-lease   Active   22m
+kube-public       Active   22m
+kube-system       Active   22m
+
+- To reach the Kubernetes API Server publicly
+```curl --cacert /var/lib/kubernetes/ca.pem https://$INTERNAL_IP:6443/version```
