@@ -889,3 +889,7 @@ instance="${NAME}-master-${i}" \
     master-kubernetes.pem master-kubernetes-key.pem ubuntu@${external_ip}:~/;
 done
 ```
+
+The kube-proxy, kube-controller-manager, kube-scheduler, and kubelet client certificates will be used to generate client authentication configuration files later.
+
+
