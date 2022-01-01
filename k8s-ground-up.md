@@ -1192,3 +1192,21 @@ WantedBy=multi-user.target
 EOF
 ```
 
+- Start and enable the etcd Server
+```
+{
+sudo systemctl daemon-reload
+sudo systemctl enable etcd
+sudo systemctl start etcd
+}
+```
+
+- Verify the etcd installation
+```
+sudo ETCDCTL_API=3 etcdctl member list \
+  --endpoints=https://127.0.0.1:2379 \
+  --cacert=/etc/etcd/ca.pem \
+  --cert=/etc/etcd/master-kubernetes.pem \
+  --key=/etc/etcd/master-kubernetes-key.pem
+```
+
