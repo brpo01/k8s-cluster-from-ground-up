@@ -1577,3 +1577,24 @@ Read more about this notice here
 If you install Docker, it will work. But be aware of this huge change.
 
 NOTE: Do not install docker and containerd on the same machine, you will have to choose which container runtime you want to run on the node.
+
+Docker
+```
+sudo apt update -y && \
+sudo apt -y install apt-transport-https ca-certificates curl software-properties-common && \
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && \
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" && \
+sudo apt update -y && \
+apt-cache policy docker-ce && \
+sudo apt -y install docker-ce && \
+sudo usermod -aG docker ${USER} && \
+sudo systemctl status docker
+```
+NOTE: exit the shell and log back in. Otherwise, you will face a permission denied error. Alternatively, you can run newgrp docker without exiting the shell. But you will need to provide the password of the logged in user
+
+Containerd
+- Download binaries for runc, cri-ctl, and containerd
+
+ ```wget https://github.com/opencontainers/runc/releases/download/v1.0.0-rc93/runc.amd64 \
+  https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.21.0/crictl-v1.21.0-linux-amd64.tar.gz \
+  https://github.com/containerd/containerd/releases/download/v1.4.4/containerd-1.4.4-linux-amd64.tar.gz ```
