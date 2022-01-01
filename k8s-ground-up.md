@@ -852,3 +852,15 @@ cfssl gencert \
   service-account-csr.json | cfssljson -bare service-account
 }
 ```
+
+## STEP 4 – DISTRIBUTING THE CLIENT AND SERVER CERTIFICATES
+
+Now it is time to start sending all the client and server certificates to their respective instances.
+
+Let us begin with the worker nodes:
+
+Copy these files securely to the worker nodes using scp utility
+
+- Root CA certificate – ca.pem
+- X509 Certificate for each worker node
+- Private Key of the certificate for each worker node
