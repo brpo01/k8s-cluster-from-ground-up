@@ -1121,3 +1121,25 @@ master_3_ip=$(aws ec2 describe-instances \
 --output text --query 'Reservations[].Instances[].PublicIpAddress')
 ssh -i k8s-cluster-from-ground-up.id_rsa ubuntu@${master_3_ip}
 ```
+
+- Download and install etcd
+```
+  wget -q --show-progress --https-only --timestamping \
+  "https://github.com/etcd-io/etcd/releases/download/v3.4.15/etcd-v3.4.15-linux-amd64.tar.gz"
+```
+
+- Extract and install the etcd server and the etcdctl command line utility:
+```
+{
+tar -xvf etcd-v3.4.15-linux-amd64.tar.gz
+sudo mv etcd-v3.4.15-linux-amd64/etcd* /usr/local/bin/
+}
+```
+- Configure the etcd server
+```
+{
+  sudo mkdir -p /etc/etcd /var/lib/etcd
+  sudo chmod 700 /var/lib/etcd
+  sudo cp ca.pem master-kubernetes-key.pem master-kubernetes.pem /etc/etcd/
+}
+```
