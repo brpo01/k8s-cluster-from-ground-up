@@ -201,3 +201,21 @@ EOF
 ```
 - Create a nginx-service resource by applying your manifest
 ```kubectl apply -f nginx-service.yaml```
+
+- Check the created service
+kubectl get service
+
+output:
+```
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+kubernetes      ClusterIP   10.100.0.1      <none>        443/TCP   68d
+nginx-service   ClusterIP   10.100.71.130   <none>        80/TCP    85s
+```
+Observation:
+
+The TYPE column in the output shows that there are different service types.
+
+- ClusterIP
+- NodePort
+- LoadBalancer &
+- Headless Service
