@@ -469,4 +469,31 @@ But in some cases, we want ReplicaSet to manage our existing containers that mat
  - not equal
  - etc...
 
- 
+ Let us look at the following manifest file:
+```
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata: 
+  name: nginx-rs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      env: prod
+    matchExpressions:
+    - { key: tier, operator: In, values: [frontend] }
+  template:
+    metadata:
+      name: nginx
+      labels: 
+        env: prod
+        tier: frontend
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+          protocol: TCP
+```
+In the above spec file, under the selector, matchLabels and matchExpression are used to specify the key-value pair. The matchLabel works exactly the same way as the equality-based selector, and the matchExpression is used to specify the set based selectors. This feature is the main differentiator between ReplicaSet and previously mentioned obsolete ReplicationController.
