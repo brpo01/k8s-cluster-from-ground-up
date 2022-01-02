@@ -451,3 +451,22 @@ Declarative way would be to open our rs.yaml manifest, change desired number of 
 spec:
   replicas: 3
 ```
+
+## Advanced label matching
+As Kubernetes mature as a technology, so does its features and improvements to k8s objects. ReplicationControllers do not meet certain complex business requirements when it comes to using selectors. Imagine if you need to select Pods with multiple lables that represents things like:
+
+- Application tier: such as Frontend, or Backend
+- Environment: such as Dev, SIT, QA, Preprod, or Prod
+So far, we used a simple selector that just matches a key-value pair and check only ‘equality’:
+```
+  selector:
+    app: nginx-pod
+```
+But in some cases, we want ReplicaSet to manage our existing containers that match certain criteria, we can use the same simple label matching or we can use some more complex conditions, such as:
+
+ - in
+ - not in
+ - not equal
+ - etc...
+
+ 
