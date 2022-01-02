@@ -107,3 +107,14 @@ Every Kubernetes object includes object fields that govern the object’s config
 - spec: consists of the core information about Pod. Here we will tell kubernetes what would be the expected state of resource, Like container image, number of replicas, environment variables and volumes.
 - status: consists of information about the running object, status of each container. Status field is supplied and updated by Kubernetes after creation. This is not something you will have to put in the YAML manifest.
 
+## Deploying a random Pod
+
+Lets see what it looks like to have a Pod running in a k8s cluster. This section is just to illustrate and get you to familiarise with how the object’s fields work. Lets deploy a basic Nginx container to run inside a Pod.
+
+- apiVersion is v1
+- kind is Pod
+- metatdata has a name which is set to nginx-pod
+- The spec section has further information about the Pod. Where to find the image to run the container – (This defaults to Docker Hub), the port and protocol.
+
+The structure is similar for any Kubernetes objects, and you will get to see them all as we progress.
+
