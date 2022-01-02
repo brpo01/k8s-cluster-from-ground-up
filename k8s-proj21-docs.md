@@ -497,3 +497,27 @@ spec:
           protocol: TCP
 ```
 In the above spec file, under the selector, matchLabels and matchExpression are used to specify the key-value pair. The matchLabel works exactly the same way as the equality-based selector, and the matchExpression is used to specify the set based selectors. This feature is the main differentiator between ReplicaSet and previously mentioned obsolete ReplicationController.
+
+
+## USING AWS LOAD BALANCER TO ACCESS YOUR SERVICE IN KUBERNETES.
+You have previously accessed the Nginx service through ClusterIP, and NodeIP, but there is another service type – Loadbalancer. This type of service does not only create a Service object in K8s, but also provisions a real external Load Balancer (e.g. Elastic Load Balancer – ELB in AWS)
+
+To get the experience of this service type, update your service manifest and use the LoadBalancer type. Also, ensure that the selector references the Pods in the replica set.
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: LoadBalancer
+  selector:
+    tier: frontend
+  ports:
+    - protocol: TCP
+      port: 80 # This is the port the Loadbalancer is listening at
+      targetPort: 80 # This is the port the container is listening at
+```
+
+A Kubernetes component in the control plane called Cloud-controller-manager is responsible for triggeriong this action. It connects to your specific cloud provider’s (AWS) APIs and create resources such as Load balancers. It will ensure that the resource is appropriately tagged:
+
