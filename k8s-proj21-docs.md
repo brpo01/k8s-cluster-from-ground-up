@@ -636,4 +636,14 @@ spec:
         ports:
         - containerPort: 80
 ```
-kubectl apply -f deployment.yaml
+```kubectl apply -f deployment.yaml```
+
+![image](https://user-images.githubusercontent.com/47898882/147881969-a66eb160-9abc-4668-8fc1-099cd1d48a0d.png)
+
+
+## PERSISTING DATA FOR PODS
+Deployments are stateless by design. Hence, any data stored inside the Pod’s container does not persist when the Pod dies.
+
+If you were to update the content of the index.html file inside the container, and the Pod dies, that content will not be lost since a new Pod will replace the dead one.
+
+Let us try that:
