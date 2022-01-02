@@ -521,3 +521,50 @@ spec:
 
 A Kubernetes component in the control plane called Cloud-controller-manager is responsible for triggeriong this action. It connects to your specific cloud provider’s (AWS) APIs and create resources such as Load balancers. It will ensure that the resource is appropriately tagged:
 
+Get the output of the entire yaml for the service. You will some additional information about this service in which you did not define them in the yaml manifest. Kubernetes did this for you.
+
+```kubectl get service nginx-service -o yaml```
+output:
+```
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"nginx-service","namespace":"default"},"spec":{"ports":[{"port":80,"protocol":"TCP","targetPort":80}],"selector":{"app":"nginx-pod"},"type":"LoadBalancer"}}
+  creationTimestamp: "2021-06-18T16:24:21Z"
+  finalizers:
+  - service.kubernetes.io/load-balancer-cleanup
+  name: nginx-service
+  namespace: default
+  resourceVersion: "21824260"
+  selfLink: /api/v1/namespaces/default/services/nginx-service
+  uid: c12145d6-a8b5-491d-95ff-8e2c6296b46c
+spec:
+  clusterIP: 10.100.153.44
+  externalTrafficPolicy: Cluster
+  ports:
+  - nodePort: 31388
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    tier: frontend
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - hostname: ac12145d6a8b5491d95ff8e2c6296b46-588706163.eu-central-1.elb.amazonaws.com
+```
+- A clusterIP key is updated in the manifest and assigned an IP address. Even though you have specified a - Loadbalancer service type, internally it still requires a clusterIP to route the external traffic through.
+- In the ports section, nodePort is still used. This is because Kubernetes still needs to use a dedicated port on the worker node to route the traffic through. Ensure that port range 30000-32767 is opened in your inbound Security Group configuration.
+- More information about the provisioned balancer is also published in the .status.loadBalancer field.
+```
+status:
+  loadBalancer:
+    ingress:
+    - hostname: ac12145d6a8b5491d95ff8e2c6296b46-588706163.eu-central-1.elb.amazonaws.com
+```
+Copy and paste the load balancer’s address to the browser, and you will access the Nginx service
+
