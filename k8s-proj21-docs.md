@@ -258,3 +258,15 @@ The key/value pairs can be anything you specify. These are not Kubernetes specif
 Apply the manifest with:
 
 ```kubectl apply -f nginx-pod.yaml```
+
+- Run kubectl port-forward command again
+
+```kubectl  port-forward svc/nginx-service 8089:80```
+
+output:
+```
+kubectl  port-forward svc/nginx-service 8089:80
+Forwarding from 127.0.0.1:8089 -> 80
+Forwarding from [::1]:8089 -> 80
+```
+Then go to your web browser and enter localhost:8089 – You should now be able to see the nginx page in the browser.
