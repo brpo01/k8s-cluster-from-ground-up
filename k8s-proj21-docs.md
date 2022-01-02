@@ -43,5 +43,20 @@ On the other hand, if you need something more robust, suitable for a production 
 
 It it a great combination of tools responsible for different parts of your applications:
 
+- Terraform for infrastructure provisioning
+- Ansible for cluster master and worker nodes configuration
+- Kubernetes for deploying your containerized application and orchestrating the deployment
+
+Other options will be to leverage a Managed Service Kubernetes cluster from public cloud providers such as: AWS EKS, Microsoft AKS, or Google Cloud Platform GKE. There are so many more options out there. Regardless of whichever one you choose, the experience is usually very similar.
+
+Most organisations choose Managed Service options for obvious reasons such as:
+
+- Less administrative overheads
+- Reduced cost of ownership
+- Improved Security
+- Seamless support
+- Periodical updates to a stable and well-tested version
+- Faster cluster spin up… and many more
+
 
 
