@@ -331,3 +331,12 @@ What has changed is:
 
 - Specified the type of service (Nodeport)
 - Specified the NodePort number to use.
+
+To access the service, you must:
+
+- Allow the inbound traffic in your EC2’s Security Group to the NodePort range 30000-32767
+- Get the public IP address of the node the Pod is running on, append the nodeport and access the app through the browser.
+You must understand that the port number 30080 is a port on the node in which the Pod is scheduled to run. If the Pod ever gets rescheduled elsewhere, that the same port number will be used on the new node it is running on. So, if you have multiple Pods running on several nodes at the same time – they all will be exposed on respective nodes’ IP addresses with a static port number.
+
+
+
