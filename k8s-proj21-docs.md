@@ -139,3 +139,24 @@ EOF
 
 ```kubectl apply -f nginx-pod.yaml```
 
+
+- Get an output of the pods running in the cluster
+
+kubectl get pods
+Output:
+```
+NAME        READY   STATUS    RESTARTS   AGE
+nginx-pod   1/1     Running   0          19m
+```
+- If the Pods were not ready for any reason, for example if there are no worker nodes, you will see something like the below output.
+```
+NAME        READY   STATUS    RESTARTS   AGE
+nginx-pod   0/1     Pending   0          111s
+```
+
+To see other fields introduced by kubernetes after you have deployed the resource, simply run below command, and examine the output. You will see other fields that kubernetes updates from time to time to represent the state of the resource within the cluster. -o simply means the output format.
+
+```kubectl get pod nginx-pod -o yaml ```
+or
+```kubectl describe pod nginx-pod```
+
