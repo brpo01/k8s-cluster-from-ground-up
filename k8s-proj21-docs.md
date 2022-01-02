@@ -296,6 +296,18 @@ Notice that the IP address of the Pod, is NOT the IP address of the server it is
 
 ```kubectl get pod nginx-pod -o wide```
 Output:
-
+```
 NAME        READY   STATUS    RESTARTS   AGE   IP               NODE                                              NOMINATED NODE   READINESS GATES
 nginx-pod   1/1     Running   0          57m   172.50.197.236   ip-172-50-197-215.eu-central-1.compute.internal   <none>           <none>
+```
+Therefore, Service with IP 10.100.71.130 takes request and forwards to Pod with IP 172.50.197.236
+
+Self Side Task:
+
+- Build the Tooling app Dockerfile and push it to Dockerhub registry
+- Write a Pod and a Service manifests, ensure that you can access the Tooling app’s frontend using port-forwarding feature.
+
+## Expose a Service on a server’s public IP address & static port
+Sometimes, it may be needed to directly access the application using the public IP of the server (when we speak of a K8s cluster we can replace ‘server’ with ‘node’) the Pod is running on. This is when the NodePort service type comes in handy.
+
+A Node port service type exposes the service on a static port on the node’s IP address. NodePorts are in the 30000-32767 range by default, which means a NodePort is unlikely to match a service’s intended port (for example, 80 may be exposed as 30080).
