@@ -219,3 +219,10 @@ The TYPE column in the output shows that there are different service types.
 - NodePort
 - LoadBalancer &
 - Headless Service
+
+Since we did not specify any type, it is obvious that the default type is ClusterIP
+
+Now that we have a service created, how can we access the app? Since there is no public IP address, we can leverage kubectl's port-forward functionality.
+
+```kubectl  port-forward svc/nginx-service 8089:80```
+8089 is an arbitrary port number on your laptop or client PC, and we want to tunnel traffic through it to the port number of the nginx-service 80.
