@@ -270,3 +270,32 @@ Forwarding from 127.0.0.1:8089 -> 80
 Forwarding from [::1]:8089 -> 80
 ```
 Then go to your web browser and enter localhost:8089 – You should now be able to see the nginx page in the browser.
+
+## UNDERSTANDING THE CONCEPT
+Let us try to understand a bit more about how the service object is able to route traffic to the Pod.
+
+If you run the below command:
+
+kubectl get service nginx-service -o wide
+You will get the output similar to this:
+
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE   SELECTOR
+nginx-service   ClusterIP   10.100.71.130   <none>        80/TCP    4d    app=nginx-pod
+As you already know, the service’s type is ClusterIP, and in the above output, it has the IP address of 10.100.71.130 – This IP works just like an internal loadbalancer. It accepts requests and forwards it to an IP address of any Pod that has the respective selector label. In this case, it is app=nginx-pod. If there is more than one Pod with that label, service will distribute the traffic to all theese pofs in a Round Robin fashion.
+
+Now, let us have a look at what the Pod looks like:
+
+```kubectl get pod nginx-pod --show-labels```
+Output:
+
+```
+NAME        READY   STATUS    RESTARTS   AGE   LABELS
+nginx-pod   1/1     Running   0          31m   app=nginx-pod
+```
+Notice that the IP address of the Pod, is NOT the IP address of the server it is running on. Kubernetes, through the implementation of network plugins assigns virtual IP adrresses to each Pod.
+
+```kubectl get pod nginx-pod -o wide```
+Output:
+
+NAME        READY   STATUS    RESTARTS   AGE   IP               NODE                                              NOMINATED NODE   READINESS GATES
+nginx-pod   1/1     Running   0          57m   172.50.197.236   ip-172-50-197-215.eu-central-1.compute.internal   <none>           <none>
