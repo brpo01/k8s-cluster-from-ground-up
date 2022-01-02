@@ -235,6 +235,7 @@ To make this work, you must reconfigure the Pod manifest and introduce labels to
 
 - Update the Pod manifest with the below and apply the manifest:
 
+```
 apiVersion: v1
 kind: Pod
 metadata:
@@ -248,3 +249,12 @@ spec:
     ports:
     - containerPort: 80
       protocol: TCP
+```
+
+Notice that under the metadata section, we have now introduced labels with a key field called app and its value nginx-pod. This matches exactly the selector key in the service manifest.
+
+The key/value pairs can be anything you specify. These are not Kubernetes specific keywords. As long as it matches the selector, the service object will be able to route traffic to the Pod.
+
+Apply the manifest with:
+
+```kubectl apply -f nginx-pod.yaml```
