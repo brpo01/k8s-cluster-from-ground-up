@@ -200,4 +200,4 @@ spec:
 EOF
 ```
 - Create a nginx-service resource by applying your manifest
-kubectl apply -f nginx-service.yaml
+```kubectl apply -f nginx-service.yaml```
