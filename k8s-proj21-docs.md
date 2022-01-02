@@ -568,3 +568,72 @@ status:
 ```
 Copy and paste the load balancer’s address to the browser, and you will access the Nginx service
 
+## USING DEPLOYMENT CONTROLLERS
+Do not Use Replication Controllers – Use Deployment Controllers Instead
+Kubernetes is loaded with a lot of features, and with its vibrant open source community, these features are constantly evolving and adding up.
+
+Previously, you have seen the improvements from ReplicationControllers (RC), to ReplicaSets (RS). In this section you will see another K8s object which is highly recommended over Replication objects (RC and RS).
+
+A Deployment is another layer above ReplicaSets and Pods, newer and more advanced level concept than ReplicaSets. It manages the deployment of ReplicaSets and allows for easy updating of a ReplicaSet as well as the ability to roll back to a previous version of deployment. It is declarative and can be used for rolling updates of micro-services, ensuring there is no downtime.
+
+Officially, it is highly recommended to use Deplyments to manage replica sets rather than using replica sets directly.
+
+Let us see Deployment in action.
+
+- Delete the ReplicaSet
+```kubectl delete rs nginx-rs```
+
+Understand the layout of the deployment.yaml manifest below. Lets go through the 3 separated sections:
+```
+# Section 1 - This is the part that defines the deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    tier: frontend
+
+# Section 2 - This is the Replica set layer controlled by the deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      tier: frontend
+
+# Section 3 - This is the Pod section controlled by the deployment and selected by the replica set in section 2.
+  template:
+    metadata:
+      labels:
+        tier: frontend
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+```
+Putting them altogether
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    tier: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        tier: frontend
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+```
+kubectl apply -f deployment.yaml
