@@ -665,3 +665,20 @@ pod "nginx-deployment-56466d4948-tg9j8" deleted
 ```
 
 - Refresh the web page – You will see that the content you saved in the container is no longer there. That is because Pods do not store data when they are being recreated – that is why they are called ephemeral or stateless. (But not to worry, we will address this with persistent volumes in the next project)
+
+Storage is a critical part of running containers, and Kubernetes offers some powerful primitives for managing it. Dynamic volume provisioning, a feature unique to Kubernetes, which allows storage volumes to be created on-demand. Without dynamic provisioning, DevOps engineers must manually make calls to the cloud or storage provider to create new storage volumes, and then create PersistentVolume objects to represent them in Kubernetes. The dynamic provisioning feature eliminates the need for DevOps to pre-provision storage. Instead, it automatically provisions storage when it is requested by users.
+
+To make the data persist in case of a Pod’s failure, you will need to configure the Pod to use following objects:
+
+- Persistent Volume or pv – is a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes.
+- Persistent Volume Claim or pvc. Persistent Volume Claim is simply a request for storage, hence the "claim" in its name.
+But where is it requesting this storage from?..
+
+In the next project,
+
+1. You will use Terraform to create a Kubernetes EKS cluster in AWS, and begin to use some powerful features such as PV, PVCs, ConfigMaps.
+2. You will also be introduced to packaging Kubernetes manifests using Helm
+3. Experience Dynamic provisioning of volumes to make your Pods stateful, using Kubernetes Statefulset
+4. Deploying applications into Kubernetes using Helm Charts
+
+Keep it up!
