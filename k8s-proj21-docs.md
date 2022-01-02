@@ -395,3 +395,59 @@ nginx-pod-kg7v6   1/1     Running   0          7m41s   172.50.192.152   ip-172-5
 nginx-pod-ntbn4   1/1     Running   0          7m41s   172.50.202.162   ip-172-50-202-18.eu-central-1.compute.internal    <none>           <none>
 ```
 Here we see three ngix-pods with some random suffixes (e.g., -j784r) – it means, that these Pods were created and named automatically by some other object (higher level of abstraction) such as ReplicaSet.
+
+Try to delete one of the Pods:
+
+```kubectl delete po nginx-pod-j784r```
+Output:
+
+```
+pod "nginx-pod-j784r" deleted
+❯ kubectl get pods
+NAME              READY   STATUS    RESTARTS   AGE
+nginx-rc-7xt8z   1/1     Running   0          22s
+nginx-rc-kg7v6   1/1     Running   0          34m
+nginx-rc-ntbn4   1/1     Running   0          34m
+```
+You can see, that we still have all 3 Pods, but one has been recreated (can you differentiate the new one?)
+
+Explore the ReplicaSet created:
+
+```kubectl get rs -o wide```
+
+```
+NAME        DESIRED   CURRENT   READY   AGE   CONTAINERS   IMAGES         SELECTOR
+nginx-rs   3         3         3       34m   nginx-pod    nginx:latest   app=nginx-pod
+```
+
+Notice, that ReplicaSet understands which Pods to create by using SELECTOR key-value pair.
+
+Get detailed information of a ReplicaSet
+To display detailed information about any Kubernetes object, you can use 2 different commands:
+
+- kubectl describe %object_type% %object_name% (e.g. kubectl describe rs nginx-rs)
+- kubectl get %object_type% %object_name% -o yaml (e.g. kubectl describe rs nginx-rs -o yaml)
+Try both commands in action and see the difference. Also try get with -o json instead of -o yaml and decide for yourself which output option is more readable for you.
+
+Scale ReplicaSet up and down:
+In general, there are 2 approaches of Kubernetes Object Management: imperative and declarative.
+
+Let us see how we can use both to scale our Replicaset up and down:
+
+Imperative:
+
+We can easily scale our ReplicaSet up by specifying the desired number of replicas in an imperative command, like this:
+
+```
+❯ kubectl scale rs nginx-rs --replicas=5
+replicationcontroller/nginx-rc scaled
+```
+
+Declarative:
+
+Declarative way would be to open our rs.yaml manifest, change desired number of replicas in respective section
+
+```
+spec:
+  replicas: 3
+```
