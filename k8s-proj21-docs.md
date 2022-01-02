@@ -226,3 +226,5 @@ Now that we have a service created, how can we access the app? Since there is no
 
 ```kubectl  port-forward svc/nginx-service 8089:80```
 8089 is an arbitrary port number on your laptop or client PC, and we want to tunnel traffic through it to the port number of the nginx-service 80.
+
+![image](https://user-images.githubusercontent.com/47898882/147879857-9d78a5da-4791-496d-b55e-c7c848a4db03.png)
