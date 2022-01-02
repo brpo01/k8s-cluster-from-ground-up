@@ -98,4 +98,12 @@ There are other patterns, such as: init container, adapter container, ambassador
 
 We will not go into the theoretical details of all the objects, rather we will begin to experience them in action.
 
+## Understanding the common YAML fields for every Kubernetes object
+Every Kubernetes object includes object fields that govern the object’s configuration:
+
+- kind: Represents the type of kubernetes object created. It can be a Pod, DaemonSet, Deployments or Service.
+- version: Kubernetes api version used to create the resource, it can be v1, v1beta and v2. Some of the kubernetes features can be released under beta and available for general public usage.
+- metadata: provides information about the resource like name of the Pod, namespace under which the Pod will be running, labels and annotations.
+- spec: consists of the core information about Pod. Here we will tell kubernetes what would be the expected state of resource, Like container image, number of replicas, environment variables and volumes.
+- status: consists of information about the running object, status of each container. Status field is supplied and updated by Kubernetes after creation. This is not something you will have to put in the YAML manifest.
 
