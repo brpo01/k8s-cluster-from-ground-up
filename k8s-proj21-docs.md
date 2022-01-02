@@ -311,3 +311,23 @@ Self Side Task:
 Sometimes, it may be needed to directly access the application using the public IP of the server (when we speak of a K8s cluster we can replace ‘server’ with ‘node’) the Pod is running on. This is when the NodePort service type comes in handy.
 
 A Node port service type exposes the service on a static port on the node’s IP address. NodePorts are in the 30000-32767 range by default, which means a NodePort is unlikely to match a service’s intended port (for example, 80 may be exposed as 30080).
+
+- Update the nginx-service yaml to use a NodePort Service.
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: NodePort
+  selector:
+    app: nginx-pod
+  ports:
+    - protocol: TCP
+      port: 80
+      nodePort: 30080
+```
+What has changed is:
+
+- Specified the type of service (Nodeport)
+- Specified the NodePort number to use.
