@@ -647,3 +647,21 @@ Deployments are stateless by design. Hence, any data stored inside the Pod’s c
 If you were to update the content of the index.html file inside the container, and the Pod dies, that content will not be lost since a new Pod will replace the dead one.
 
 Let us try that:
+
+- Scale the Pods down to 1 replica.
+
+- Exec into the running container (figure out the command yourself)
+
+- Install vim so that you can edit the file
+```
+apt-get update
+apt-get install vim
+```
+- Update the content of the file and add the code below /usr/share/nginx/html/index.html
+
+- Now, delete the only running Pod
+``` kubectl delete po nginx-deployment-56466d4948-tg9j8
+pod "nginx-deployment-56466d4948-tg9j8" deleted
+```
+
+- Refresh the web page – You will see that the content you saved in the container is no longer there. That is because Pods do not store data when they are being recreated – that is why they are called ephemeral or stateless. (But not to worry, we will address this with persistent volumes in the next project)
