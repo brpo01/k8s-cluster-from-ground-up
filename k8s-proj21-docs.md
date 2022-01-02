@@ -160,3 +160,17 @@ To see other fields introduced by kubernetes after you have deployed the resourc
 or
 ```kubectl describe pod nginx-pod```
 
+## ACCESSING THE APP FROM THE BROWSER
+Now you have a running Pod. What’s next?
+
+The ultimate goal of any solution is to access it either through a web portal or some application (e.g., mobile app). We have a Pod with Nginx container, so we need to access it from the browser. But all you have is a running Pod that has its own IP address which cannot be accessed through the browser. To achieve this, we need another Kubernetes object called Service to accept our request and pass it on to the Pod.
+
+A service is an object that accepts requests on behalf of the Pods and forwards it to the Pod’s IP address. If you run the command below, you will be able to see the Pod’s IP address. But there is no way to reach it directly from the outside world.
+
+kubectl get pod nginx-pod  -o wide 
+
+Output:
+```
+NAME        READY   STATUS    RESTARTS   AGE    IP               NODE                                              NOMINATED NODE   READINESS GATES
+nginx-pod   1/1     Running   0          138m   172.50.202.214   ip-172-50-202-161.eu-central-1.compute.internal   <none>           <none>
+```
