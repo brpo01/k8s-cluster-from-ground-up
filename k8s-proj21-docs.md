@@ -228,3 +228,23 @@ Now that we have a service created, how can we access the app? Since there is no
 8089 is an arbitrary port number on your laptop or client PC, and we want to tunnel traffic through it to the port number of the nginx-service 80.
 
 ![image](https://user-images.githubusercontent.com/47898882/147879857-9d78a5da-4791-496d-b55e-c7c848a4db03.png)
+
+Unfortunately, this will not work quite yet. Because there is no way the service will be able to select the actual Pod it is meant to route traffic to. If there are hundreds of Pods running, there must be a way to ensure that the service only forwards requests to the specific Pod it is intended for.
+
+To make this work, you must reconfigure the Pod manifest and introduce labels to match the selectors key in the field section of the service manifest.
+
+- Update the Pod manifest with the below and apply the manifest:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    app: nginx-pod  
+spec:
+  containers:
+  - image: nginx:latest
+    name: nginx-pod
+    ports:
+    - containerPort: 80
+      protocol: TCP
