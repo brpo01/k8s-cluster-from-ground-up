@@ -118,3 +118,24 @@ Lets see what it looks like to have a Pod running in a k8s cluster. This section
 
 The structure is similar for any Kubernetes objects, and you will get to see them all as we progress.
 
+- Create a Pod yaml manifest on your master node
+
+```
+sudo cat <<EOF | sudo tee ./nginx-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+name: nginx-pod
+spec:
+containers:
+- image: nginx:latest
+name: nginx-pod
+ports:
+- containerPort: 80
+  protocol: TCP
+EOF
+```
+- Apply the manifest with the help of kubectl
+
+```kubectl apply -f nginx-pod.yaml```
+
