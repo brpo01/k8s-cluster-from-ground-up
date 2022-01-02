@@ -338,5 +338,14 @@ To access the service, you must:
 - Get the public IP address of the node the Pod is running on, append the nodeport and access the app through the browser.
 You must understand that the port number 30080 is a port on the node in which the Pod is scheduled to run. If the Pod ever gets rescheduled elsewhere, that the same port number will be used on the new node it is running on. So, if you have multiple Pods running on several nodes at the same time – they all will be exposed on respective nodes’ IP addresses with a static port number.
 
+How Kubernetes ensures desired number of Pods is always running?
+When we define a Pod manifest and appy it – we create a Pod that is running until it’s terminated for some reason (e.g., error, Node reboot or some other reason), but what if we want to declare that we always need at least 3 replicas of the same Pod running at all times? Then we must use an ResplicaSet (RS) object – it’s purpose is to maintain a stable set of Pod replicas running at any given time. As such, it is often used to guarantee the availability of a specified number of identical Pods.
 
+Note: In some older books or documents you might find the old version of a similar object – ReplicationController (RC), it had similar purpose, but did not support set-base label selectors and it is now recommended to use ReplicaSets instead, since it is the next-generation RC.
 
+Let us delete our nginx-pod Pod:
+
+```kubectl delete -f nginx-pod.yaml```
+Output:
+
+```pod "nginx-pod" deleted```
