@@ -152,6 +152,46 @@ data "aws_caller_identity" "current" {} # used for accesing Account ID and ARN
 
 - Create a file – eks.tf and provision EKS cluster (Create the file only if you are not using your existing Terraform code. Otherwise you can simply append it to the main.tf from your existing code) Read more about this module from the official documentation here – Reading it will help you understand more about the rich features of the module.
 
+```
+module "eks-cluster" {
+  source           = "terraform-aws-modules/eks/aws"
+  version          = "17.1.0"
+  cluster_name     = "${var.cluster_name}"
+  cluster_version  = "1.20"
+  write_kubeconfig = true
+
+  subnets = module.vpc.private_subnets
+  vpc_id  = module.vpc.vpc_id
+
+ worker_groups_launch_template = local.worker_groups_launch_template
+
+  # map developer & admin ARNs as kubernetes Users
+  map_users = concat(local.admin_user_map_users, local.developer_user_map_users)
+}
+```
+
+- Create a file – worker-nodes.tf – This is used to set the policies for autoscaling. To save as much as 90% of cost we will use Spot Instances – Read more here
+
+```
+# add spot fleet Autoscaling policy
+resource "aws_autoscaling_policy" "eks_autoscaling_policy" {
+count = length(local.worker_groups_launch_template)
+
+name                   = "${module.eks-cluster.workers_asg_names[count.index]}-autoscaling-policy"
+autoscaling_group_name = module.eks-cluster.workers_asg_names[count.index]
+policy_type            = "TargetTrackingScaling"
+
+target_tracking_configuration {
+predefined_metric_specification {
+  predefined_metric_type = "ASGAverageCPUUtilization"
+}
+target_value = var.autoscaling_average_cpu
+}
+}
+```
+
+- 
+
 
 
 
