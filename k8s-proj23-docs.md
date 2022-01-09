@@ -150,6 +150,8 @@ state = "available"
 data "aws_caller_identity" "current" {} # used for accesing Account ID and ARN
 ```
 
+- Create a file – eks.tf and provision EKS cluster (Create the file only if you are not using your existing Terraform code. Otherwise you can simply append it to the main.tf from your existing code) Read more about this module from the official documentation here – Reading it will help you understand more about the rich features of the module.
+
 
 
 
