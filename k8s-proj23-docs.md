@@ -97,6 +97,18 @@ Key: kubernetes.io/cluster/cluster-name
 Value: shared
 ```
 
+- For private subnets that use internal load balancer resources: each subnet must be tagged
+
+```
+Key: kubernetes.io/role/internal-elb
+Value: 1
+```
+- For public subnets that use internal load balancer resources: each subnet must be tagged
+
+```
+Key: kubernetes.io/role/elb
+Value: 1
+```
 
 
 
