@@ -14,3 +14,23 @@ At this point you already have some Terraform experience. So, you have some work
 
 Note: Use Terraform version v1.0.2
 
+- Open up a new directory on your laptop, and name it eks
+- Use AWS CLI to create an S3 bucket
+- Create a file – backend.tf Task for you, ensure the backend is configured for remote state in S3
+```
+terraform {
+}
+```
+- Create a file – network.tf and provision Elastic IP for Nat Gateway, VPC, Private and public subnets.
+
+```
+# reserve Elastic IP to be used in our NAT gateway
+resource "aws_eip" "nat_gw_elastic_ip" {
+vpc = true
+
+tags = {
+Name            = "${var.cluster_name}-nat-eip"
+iac_environment = var.iac_environment_tag
+}
+```
+
